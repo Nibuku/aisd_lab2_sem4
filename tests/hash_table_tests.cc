@@ -3,8 +3,11 @@
 
 using namespace std;
 
-/*TEST(HashTable, default_constructor) {
-	HashTable<int, int> my_table = HashTable<int,int>(10);
-	HashTable<int, int> other = HashTable<int,int>(15);
-	my_table(other);
-};*/
+TEST(HashTable, default_constructor) {
+	HashTable<int, string> my_table(10);
+	cout << my_table.get_size() << endl;
+	my_table.insert(1, "One");
+	my_table.insert(1, "Six");
+	my_table.insert(2, "Two");
+	my_table.print();
+};
