@@ -121,3 +121,147 @@ TEST(HashTable, count) {
 	EXPECT_TRUE(my_table.count(4)==1);
 	EXPECT_TRUE(my_table.count(2)==4);
 }
+
+TEST(HashTable, random_key_values_constructor) {
+	srand(42);
+	HashTable<int, int> my_table(5, 80, 20, 5);
+	my_table.print();
+}
+
+TEST(HashTable, randomSize25) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(25, 1000, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 25 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize75) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(75, 1000, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 75 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize125) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(125, 1000, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 125 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize175) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(175, 1000, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 175 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize225) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(225, 1000, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 225 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+TEST(HashTable, randomSize275) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(275, 100, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 275 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize325) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(325, 100, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 325 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+TEST(HashTable, randomSize375) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(375, 100, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 375 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize425) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(425, 100, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 425 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}
+
+TEST(HashTable, randomSize475) {
+	srand(std::time(0));
+	int count = 0;
+	for (size_t i = 0; i < 100; ++i) {
+		HashTable<int, int> v(475, 100, 0, 26);
+		for (int j = 0; j < v.get_size(); ++j) {
+			if (v.count(j) > 1)
+				++count;
+		}
+	}
+	cout << "size: " << 475 << endl;
+	cout << "Quantity of collisions: " << count / 100 << endl;
+}

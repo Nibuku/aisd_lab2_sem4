@@ -38,6 +38,19 @@ public:
             _data[i] = new Pair(i, value);
         }
     };
+
+    HashTable(size_t size, const V& max, const V& min, size_t el_quant) {
+        if (size == 0)
+            throw std::invalid_argument("Size=0");
+        _size = size;
+        _data.resize(size);
+        for (int i = 0; i < el_quant; ++i) {
+            K key=rand();
+            V value = rand() % (max - min + 1) + min;
+            insert(key, value);
+        }
+    };
+
     HashTable(const HashTable& other) {
         _size = other.get_size();
         _data.resize(_size);
