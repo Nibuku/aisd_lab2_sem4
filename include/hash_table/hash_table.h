@@ -34,19 +34,19 @@ public:
         _size = size;
         _data.resize(size);
         for (int i = 0; i < size; ++i) {
-            _data[i]= rand() % (max - min + 1) + min;
+            V value = rand() % (max - min + 1) + min;
+            _data[i] = new Pair(i, value);
         }
     };
     HashTable(const HashTable& other) {
-        _size = other._size;
-        _data.resize(size);
+        _size = other.get_size();
+        _data.resize(_size);
         for (size_t i = 0; i < _size; ++i) {
             Pair* current = other._data[i];
             while (current != nullptr) {
-                insert(current->key, current->value);
+                insert(current->_key, current->_value);
                 current = current->next;
             }
-            ++_size;
         }
     }
     ~HashTable() {
@@ -114,7 +114,7 @@ public:
         _data[index]->filled = true;
     }
     void insert_or_assign( K key,  V value) {
-        size_t index = hash(key) % _size;
+        size_t index = hash(key);
         Pair* current = _data[index];
         while (current) {
             if (current->_key == key) {
