@@ -125,16 +125,24 @@ public:
         }
         insert(key, value);
     };
-    bool erase( K key) {
-        size_t index = hash(key) % _size;
+    bool erase(K key) {
+        size_t index = hash(key);
         Pair* current = _data[index];
-        while (current) {
-            Pair* tmp = current;
+        Pair* prev = nullptr;
+        if (current) {
+                if (prev) {
+                    prev->next = current->next;
+                }
+                else {
+                    _data[index] = current->next;
+                }
+                delete current;
+                return true;
+            prev = current;
             current = current->next;
-            delete tmp;
         }
         return false;
-    };
+    }
 
     bool contains( V value) const {
         for (int i = 0; i < _size; ++i) {
@@ -147,16 +155,16 @@ public:
         }
         return false;
     };
-    V* search(const K& key) const {
+    V* search(K key) {
         size_t index = hash(key);
         Pair* tmp = _data[index];
         while (tmp) {
             if (tmp->_key != key)
                 tmp = tmp->next;
-            return tmp->_value;
+            return &(tmp->_value);
         }
     };
-    int count(const K& key) const {
+    int count(K key) {
         size_t index = hash(key);
         int count = 0;
         Pair* tmp = _data[index];
