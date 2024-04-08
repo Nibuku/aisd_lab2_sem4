@@ -1,11 +1,12 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include<list>
 #include <stdexcept>
 
 using namespace std;
 
-template <typename K, typename V>
+template <typename K, typename V, template<typename...> class Container = std::vector>
 class HashTable {
     struct Pair {
         K _key;
