@@ -84,6 +84,7 @@ TEST(HashTable, erase) {
 	EXPECT_TRUE(my_table.erase(3)==1);
 	EXPECT_TRUE(my_table.erase(3)==1);
 	EXPECT_TRUE(my_table.erase(3)==0);
+	EXPECT_TRUE(my_table.erase(2) == 1);
 	my_table.print();
 
 }

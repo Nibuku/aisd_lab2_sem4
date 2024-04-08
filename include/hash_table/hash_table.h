@@ -119,14 +119,14 @@ public:
             std::cout << std::endl;
         }
     };
-    void insert(K key, V value) {
+    void insert( const K& key,const V& value) {
         size_t index = hash(key);
         Pair* newPair = new Pair(key, value);
         newPair->next = _data[index];
         _data[index] = newPair;
         _data[index]->filled = true;
     }
-    void insert_or_assign( K key,  V value) {
+    void insert_or_assign(const K& key, const V& value) {
         size_t index = hash(key);
         Pair* current = _data[index];
         while (current) {
@@ -138,7 +138,7 @@ public:
         }
         insert(key, value);
     };
-    bool erase(K key) {
+    bool erase(const K& key) {
         size_t index = hash(key);
         Pair* current = _data[index];
         Pair* prev = nullptr;
@@ -149,15 +149,15 @@ public:
                 else {
                     _data[index] = current->next;
                 }
-                delete current;
-                return true;
+                delete current;    
             prev = current;
             current = current->next;
+            return true;
         }
         return false;
     }
 
-    bool contains( V value) const {
+    bool contains(const V& value) const {
         for (int i = 0; i < _size; ++i) {
             Pair* current = _data[i];
             while (current) {
@@ -168,7 +168,7 @@ public:
         }
         return false;
     };
-    V* search(K key) {
+    V* search(const K& key) {
         size_t index = hash(key);
         Pair* tmp = _data[index];
         while (tmp) {
@@ -177,7 +177,7 @@ public:
             return &(tmp->_value);
         }
     };
-    int count(K key) {
+    int count(const K& key) {
         size_t index = hash(key);
         int count = 0;
         Pair* tmp = _data[index];
