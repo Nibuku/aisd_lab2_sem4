@@ -6,7 +6,7 @@
 
 using namespace std;
 
-template <typename K, typename V, template<typename...> class Container = std::vector>
+template <typename K, typename V>
 class HashTable {
     struct Pair {
         K _key;
