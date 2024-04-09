@@ -12,10 +12,7 @@ class HashTable {
         K _key;
         V _value;
         Pair* next;
-        bool filled;
-        Pair(K key, V value) : _key(key), _value(value), next(nullptr) {
-            bool filled = true;
-        };
+        Pair(K key, V value) : _key(key), _value(value), next(nullptr) {};
     };
     std::vector<Pair*> _data;
     size_t _size;
@@ -125,7 +122,7 @@ public:
         Pair* newPair = new Pair(key, value);
         newPair->next = _data[index];
         _data[index] = newPair;
-        _data[index]->filled = true;
+       
     }
     void insert_or_assign(const K& key, const V& value) {
         size_t index = hash(key);
