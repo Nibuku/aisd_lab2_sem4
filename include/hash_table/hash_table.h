@@ -12,10 +12,7 @@ class HashTable {
         K _key;
         V _value;
         Pair* next;
-        bool filled;
-        Pair(K key, V value) : _key(key), _value(value), next(nullptr) {
-            bool filled = true;
-        };
+        Pair(K key, V value) : _key(key), _value(value), next(nullptr) {};
     };
     Container<Pair*> _data;
     size_t _size;
@@ -128,7 +125,6 @@ public:
         std::advance(item, index);
         newPair->next = *item;
         *item = newPair;
-        (*item)->filled = true;
     }
     
     void insert_or_assign(const K& key, const V& value) {
