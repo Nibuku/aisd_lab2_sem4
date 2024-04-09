@@ -10,14 +10,21 @@ TEST(HashTable, default_constructor) {
 
 TEST(HashTable, random_constructor) {
 	srand(42);
-	HashTable<int, int> my_table(10, 80, 20);
+	HashTable<int, int> my_table(6, 80, 20);
+	EXPECT_TRUE(my_table.get_size() == 6);
+	my_table.print();
+};
+
+TEST(HashTable, random_constructor_key) {
+	srand(42);
+	HashTable<int, int> my_table(10, 80, 20, 7);
 	EXPECT_TRUE(my_table.get_size() == 10);
 	my_table.print();
 };
 
 TEST(HashTable, copy_constructor) {
 	srand(56);
-	HashTable<int, int> my_table(10, 30, 50);
+	HashTable<int, int> my_table(10, 50, 30, 8);
 	HashTable<int, int> other(my_table);
 	EXPECT_TRUE(my_table.get_size() == other.get_size());
 	cout << "First table: "<<endl;
@@ -28,7 +35,7 @@ TEST(HashTable, copy_constructor) {
 
 TEST(HashTable, operator_) {
 	srand(42);
-	HashTable<int, int> my_table(5, 0, 20);
+	HashTable<int, int> my_table(5, 25, 20, 8);
 	HashTable<int, int> other=my_table;
 	EXPECT_TRUE(my_table.get_size() == other.get_size());
 	cout << "First table: " << endl;
@@ -82,8 +89,8 @@ TEST(HashTable, erase) {
 	cout << "Table: " << endl;
 	my_table.print();
 	EXPECT_TRUE(my_table.erase(3)==1);
-	EXPECT_TRUE(my_table.erase(3)==1);
-	EXPECT_TRUE(my_table.erase(3)==0);
+	EXPECT_TRUE(my_table.erase(3) == 1);
+	EXPECT_TRUE(my_table.erase(3) == 0);
 	EXPECT_TRUE(my_table.erase(2) == 1);
 	my_table.print();
 
@@ -106,27 +113,21 @@ TEST(HashTable, contains) {
 
 TEST(HashTable, search) {
 	srand(42);
-	HashTable<int, int> my_table(5, 80, 20);
+	HashTable<int, int> my_table(5, 80, 20, 5);
 	my_table.print();
-	EXPECT_TRUE(*my_table.search(4)==60);
+	EXPECT_TRUE(*my_table.search(175)==54);
 	cout << my_table.search(5) << endl;;
 }
 
 TEST(HashTable, count) {
 	srand(42);
-	HashTable<int, int> my_table(5, 80, 20);
+	HashTable<int, int> my_table(5, 80, 20, 7);
 	my_table.insert(2, 30);
 	my_table.insert(2, 35);
 	my_table.insert(2, 57);
 	my_table.print();
-	EXPECT_TRUE(my_table.count(4)==1);
-	EXPECT_TRUE(my_table.count(2)==4);
-}
-
-TEST(HashTable, random_key_values_constructor) {
-	srand(42);
-	HashTable<int, int> my_table(5, 80, 20, 5);
-	my_table.print();
+	EXPECT_TRUE(my_table.count(16083)==1);
+	EXPECT_TRUE(my_table.count(2)==3);
 }
 
 TEST(HashTable, randomSize25) {

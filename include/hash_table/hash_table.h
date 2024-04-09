@@ -6,7 +6,7 @@
 
 using namespace std;
 
-template <typename K, typename V, template<typename...> class Container = std::vector>
+template <typename K, typename V, template<typename...> class Container = std::list>
 class HashTable {
     struct Pair {
         K _key;
@@ -17,7 +17,7 @@ class HashTable {
             bool filled = true;
         };
     };
-    std::vector<Pair*> _data;
+    Container<Pair*> _data;
     size_t _size;
     size_t hash(K key) {
         return key % _size;
@@ -29,14 +29,15 @@ public:
         _size = size;
         _data.resize(size);
     };
+    
     HashTable(size_t size, const V& max, const V& min) {
         if (size == 0)
             throw std::invalid_argument("Size=0");
         _size = size;
         _data.resize(size);
         for (int i = 0; i < size; ++i) {
-            V value = rand() % (max - min + 1) + min;
-            _data[i] = new Pair(i, value);
+            V value = min + (rand() % (max - min + 1));
+            insert(i, value);
         }
     };
 
@@ -47,7 +48,7 @@ public:
         _data.resize(size);
         for (int i = 0; i < el_quant; ++i) {
             K key=rand();
-            V value = rand() % (max - min + 1) + min;
+            V value = min + (rand() % (max - min + 1));
             insert(key, value);
         }
     };
@@ -55,8 +56,8 @@ public:
     HashTable(const HashTable& other) {
         _size = other.get_size();
         _data.resize(_size);
-        for (size_t i = 0; i < _size; ++i) {
-            Pair* current = other._data[i];
+        for (auto& data:other._data) {
+            Pair* current = data;
             while (current != nullptr) {
                 insert(current->_key, current->_value);
                 current = current->next;
@@ -64,8 +65,8 @@ public:
         }
     }
     ~HashTable() {
-        for (size_t i = 0; i < _size; i++) {
-            Pair* current = _data[i];
+        for (auto& data :_data) {
+            Pair* current = data;
             while (current) {
                 Pair* tmp = current;
                 current = current->next;
@@ -76,8 +77,8 @@ public:
     }
     HashTable& operator=(const HashTable& other) {
         if (this != &other) {
-            for (size_t i = 0; i < _size; i++) {
-                Pair* current = _data[i];
+            for (auto& data : _data) {
+                Pair* current = data;
                 while (current != nullptr) {
                     Pair* tmp = current;
                     current = current->next;
@@ -86,8 +87,8 @@ public:
             }
             _size = other._size;  
             _data.resize(size);
-            for (size_t i = 0; i < _size; ++i) {
-                Pair* current = other._data[i];
+            for (auto& data : other._data) {
+                Pair* current = data;
                 while (current != nullptr) {
                     insert(current->key, current->value);
                     current = current->next;
@@ -109,8 +110,8 @@ public:
 
 
     void print() {
-        for (int i = 0; i < _size; ++i) {
-            Pair* current = _data[i];
+        for(auto & data:_data) {
+            Pair* current = data;
             if (current)
                 std::cout << current->_key << ":";
             while (current) {
@@ -120,16 +121,21 @@ public:
             std::cout << std::endl;
         }
     };
-    void insert( const K& key,const V& value) {
+    void insert(const K& key, const V& value) {
         size_t index = hash(key);
         Pair* newPair = new Pair(key, value);
-        newPair->next = _data[index];
-        _data[index] = newPair;
-        _data[index]->filled = true;
+        auto item = _data.begin();
+        std::advance(item, index);
+        newPair->next = *item;
+        *item = newPair;
+        (*item)->filled = true;
     }
+    
     void insert_or_assign(const K& key, const V& value) {
         size_t index = hash(key);
-        Pair* current = _data[index];
+        auto item = _data.begin();
+        std::advance(item, index);
+        Pair* current = *item;
         while (current) {
             if (current->_key == key) {
                 current->_value = value;
@@ -141,26 +147,28 @@ public:
     };
     bool erase(const K& key) {
         size_t index = hash(key);
-        Pair* current = _data[index];
+        auto item = _data.begin();
+        std::advance(item, index);
+        Pair* current = *item;
         Pair* prev = nullptr;
         if (current) {
-                if (prev) {
-                    prev->next = current->next;
-                }
-                else {
-                    _data[index] = current->next;
-                }
-                delete current;    
+            if (prev) {
+                prev->next = current->next;
+            }
+            else {
+                *item = current->next;
+            }
+            delete current;
             prev = current;
             current = current->next;
             return true;
         }
         return false;
     }
-
+    
     bool contains(const V& value) const {
-        for (int i = 0; i < _size; ++i) {
-            Pair* current = _data[i];
+        for (auto& data: _data) {
+            Pair* current = data;
             while (current) {
                 if (current->_value == value)
                     return true;
@@ -171,7 +179,9 @@ public:
     };
     V* search(const K& key) {
         size_t index = hash(key);
-        Pair* tmp = _data[index];
+        auto item = _data.begin();
+        std::advance(item, index);
+        Pair* tmp = *item;
         while (tmp) {
             if (tmp->_key != key)
                 tmp = tmp->next;
@@ -181,7 +191,9 @@ public:
     int count(const K& key) {
         size_t index = hash(key);
         int count = 0;
-        Pair* tmp = _data[index];
+        auto item = _data.begin();
+        std::advance(item, index);
+        Pair* tmp = *item;
         while (tmp) {
             ++count;
             tmp = tmp->next;
